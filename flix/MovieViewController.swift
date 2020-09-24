@@ -10,8 +10,7 @@ import UIKit
 class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    
-    var movies : [[String : Any]]
+    var movies = [[String : Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +28,13 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
               print(error.localizedDescription)
            } else if let data = data {
               let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                  print(dataDictionary)
             
             self.movies = dataDictionary["results"]
                 as! [[String: Any]]
-            print(self.movies)
             
             self.tableView.reloadData()
+            print(dataDictionary)
+            
            }
         }
         task.resume()
@@ -46,8 +45,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell")
-            as! MovieCell
+        let cell = UITableViewCell()
         
         let movie = movies[indexPath.row]
         let title = movie["title"] as! String
